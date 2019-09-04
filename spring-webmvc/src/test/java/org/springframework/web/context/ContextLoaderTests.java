@@ -66,6 +66,7 @@ public class ContextLoaderTests {
 				"/org/springframework/web/context/WEB-INF/applicationContext.xml " +
 				"/org/springframework/web/context/WEB-INF/context-addition.xml");
 		ServletContextListener listener = new ContextLoaderListener();
+		// 设置servletContext的监听器
 		ServletContextEvent event = new ServletContextEvent(sc);
 		listener.contextInitialized(event);
 		String contextAttr = WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE;
