@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                https://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<alias name="someMessageSource" alias="testAlias"></alias>
+
+	<bean id="someMessageSource" name="yourMessageSource"
+		  class="org.springframework.context.support.StaticMessageSource" >
+		<meta key="key" value="value"/>
+		<replaced-method name="addMessage" replacer="someMessageSource">
+		<arg-type match=""></arg-type>
+		</replaced-method>
+		<constructor-arg index="1" ref="hh">
+			<idref></idref>
+		</constructor-arg>
+		<property name="alwaysUseMessageFormat" value="false"></property>
+
+	</bean>
+
+
+	<bean id="someMessageSource" name="yourMessageSource"
+		  class="org.springframework.context.support.StaticMessageSource">
+		<meta key="key" value="value"/>
+		<lookup-method bean="someMessageSource" ></lookup-method>
+	</bean>
+
+
+
+	<bean id="context" class="org.springframework.context.support.ClassPathXmlApplicationContext" lazy-init="true" >
+		<constructor-arg value="someNonExistentFile.xml"/>
+		<meta key="key" value="value"/>
+	</bean>
+
+
+
+	<import resource="./simpleContextImport.xml"></import>
+
+
+
+
+
+</beans>

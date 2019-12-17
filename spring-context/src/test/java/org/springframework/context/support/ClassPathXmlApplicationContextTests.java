@@ -72,10 +72,24 @@ public class ClassPathXmlApplicationContextTests {
 	private static final String ALIAS_FOR_PARENT_CONTEXT = PATH + "aliasForParent.xml";
 	private static final String TEST_PROPERTIES = "test.properties";
 
+	private static final String importPathXml = PATH + "simpleContextImport.xml";
+
 
 	@Test
 	public void testSingleConfigLocation() {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(FQ_SIMPLE_CONTEXT);
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("/org/springframework/context/support/simpleContextImport.xml");
+		StaticMessageSource ms = (StaticMessageSource) ctx.getBean("someMessageSource");
+		assertThat(ms).isNotNull();
+		assertThat(ctx.containsBean("someMessageSource")).isTrue();
+		ctx.close();
+	}
+
+	@Test
+	public void testSingleConfigLocationImport() {
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("simpleContextImport.xml");
+		StaticMessageSource ms = (StaticMessageSource) ctx.getBean("someMessageSource");
+
+		assertThat(ms).isNotNull();
 		assertThat(ctx.containsBean("someMessageSource")).isTrue();
 		ctx.close();
 	}

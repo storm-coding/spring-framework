@@ -511,16 +511,20 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.applicationListeners;
 	}
 
+	// spring beanFactory通用的初始化方法
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
+			// 初始化之前状态、初始化环境配置文件
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
+			// 创建beanFactory 并加载bean配置文件，生成  beanDefinition
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
+			// 设置默认操作、默认实现类
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -596,12 +600,15 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Initialize any placeholder property sources in the context environment.
+		// 子类可以重写这个方法，实现在容器初始化之前的一些逻辑
 		initPropertySources();
 
+		// 验证容器所需要的配合属性
 		// Validate that all properties marked as required are resolvable:
 		// see ConfigurablePropertyResolver#setRequiredProperties
 		getEnvironment().validateRequiredProperties();
 
+		// 保存初始化之前的监听器
 		// Store pre-refresh ApplicationListeners...
 		if (this.earlyApplicationListeners == null) {
 			this.earlyApplicationListeners = new LinkedHashSet<>(this.applicationListeners);

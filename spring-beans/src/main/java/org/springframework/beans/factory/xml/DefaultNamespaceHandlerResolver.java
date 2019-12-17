@@ -107,6 +107,7 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 
 
 	/**
+	 * 从handlerMappings根据namespaceUri获取对应的标签解析器，如果没有加载则进行加载并初始化
 	 * Locate the {@link NamespaceHandler} for the supplied namespace URI
 	 * from the configured mappings.
 	 * @param namespaceUri the relevant namespace URI
@@ -148,11 +149,15 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 	}
 
 	/**
+	 * 获取classLoader下所有的自定义的标签
 	 * Load the specified NamespaceHandler mappings lazily.
 	 */
 	private Map<String, Object> getHandlerMappings() {
+
 		Map<String, Object> handlerMappings = this.handlerMappings;
+		System.out.println("entry the getHandlerMapping method");
 		if (handlerMappings == null) {
+			System.out.println("handleMappings is null");
 			synchronized (this) {
 				handlerMappings = this.handlerMappings;
 				if (handlerMappings == null) {

@@ -73,7 +73,9 @@ public class DefaultDocumentLoader implements DocumentLoader {
 		if (logger.isTraceEnabled()) {
 			logger.trace("Using JAXP provider [" + factory.getClass().getName() + "]");
 		}
+		// 根据entityResolver和errorHandler生成DocumentBuilder
 		DocumentBuilder builder = createDocumentBuilder(factory, entityResolver, errorHandler);
+		// DocumentBuilder生成Document
 		return builder.parse(inputSource);
 	}
 
